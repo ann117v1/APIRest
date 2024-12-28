@@ -1,0 +1,8 @@
+CREATE TABLE topicos (
+    id SERIAL PRIMARY KEY,
+    autor VARCHAR(255) NOT NULL,
+    curso VARCHAR(255) NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    mensaje TEXT NOT NULL,
+    
+);
