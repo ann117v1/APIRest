@@ -1,5 +1,7 @@
 package com.ForoHub.APIRest.infra.security;
 
+import jakarta.servlet.Filter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,11 +17,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfigurations {
 
-    private SecurityFilter securityFilter;
 
-    public SecurityConfig(SecurityFilter securityFilter) {
+    private final SecurityFilter securityFilter;
+
+    public SecurityConfigurations(SecurityFilter securityFilter) {
         this.securityFilter = securityFilter;
     }
 
@@ -36,7 +39,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

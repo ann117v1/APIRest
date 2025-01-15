@@ -1,4 +1,6 @@
 package com.ForoHub.APIRest.dto;
 
-public record DatosAutenticacionUsuario (String login, String clave){
+import jakarta.validation.constraints.NotBlank;
+
+public record DatosAutenticacionUsuario(@NotBlank String login,@NotBlank String clave) {
 }

@@ -1,10 +1,9 @@
 package com.ForoHub.APIRest.controller;
 
 import com.ForoHub.APIRest.dto.DatosAutenticacionUsuario;
-import com.ForoHub.APIRest.dto.DatosJWTToken;
 import com.ForoHub.APIRest.infra.security.TokenService;
-import com.ForoHub.APIRest.modelo.Usuario;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,19 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/login")
 public class AutenticacionController {
 
-    private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    public AutenticacionController(AuthenticationManager authenticationManager, TokenService tokenService) {
-        this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
-    }
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacion) {
-        Authentication authToken = new UsernamePasswordAuthenticationToken(datosAutenticacion.login(), datosAutenticacion.clave());
-        var usuarioAutenticado = authenticationManager.authenticate(authToken);
-        var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
-        return ResponseEntity.ok(new DatosJWTToken(JWTtoken));
+    public ResponseEntity<String> autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario){
+        Authentication authToken = new UsernamePasswordAuthenticationToken(
+                datosAutenticacionUsuario.login(),
+                datosAutenticacionUsuario.clave());
+        authenticationManager.authenticate(authToken);
+        String JWTtoken = tokenService.generarToken(authToken);
+        return ResponseEntity.ok(JWTtoken);
     }
 }

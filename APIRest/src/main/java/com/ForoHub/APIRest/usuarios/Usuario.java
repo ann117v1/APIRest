@@ -1,9 +1,7 @@
-package com.ForoHub.APIRest.modelo;
+package com.ForoHub.APIRest.usuarios;
 
-import com.ForoHub.APIRest.dto.DatosAutenticacionUsuario;
-import com.ForoHub.APIRest.dto.DatosRespuestaActualizar;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,28 +9,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
 @EqualsAndHashCode(of = "id")
 public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
     private String clave;
 
-    public void actualizarDatos(DatosAutenticacionUsuario datosAutenticacionUsuario) {
-        if (datosAutenticacionUsuario.login() != null) {
-            this.login = datosAutenticacionUsuario.login();
-        }
-        if (datosAutenticacionUsuario.clave() != null) {
-            this.clave = datosAutenticacionUsuario.clave();
-        }
+    public Usuario(Long id, String login, String clave) {
+        this.id = id;
+        this.login = login;
+        this.clave = clave;
+    }
+
+    public Usuario() {
     }
 
     public Long getId() {
@@ -46,8 +40,6 @@ public class Usuario implements UserDetails {
     public String getClave() {
         return clave;
     }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,26 +56,23 @@ public class Usuario implements UserDetails {
         return login;
     }
 
-
-
-
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return true;
     }
 }

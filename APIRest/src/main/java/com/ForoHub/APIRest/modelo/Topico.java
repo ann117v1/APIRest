@@ -64,15 +64,18 @@ public class Topico {
 
 
     public void actualizarDatos(DatosActulizarTopico datosActulizarTopico) {
-        if (datosActulizarTopico.autor() != null) {
+        if (datosActulizarTopico.autor() != null && !datosActulizarTopico.autor().isBlank()) {
             this.autor = datosActulizarTopico.autor();
         }
-        if (datosActulizarTopico.titulo() != null) {
+        if (datosActulizarTopico.curso() != null && !datosActulizarTopico.curso().isBlank()) {
+            this.curso = datosActulizarTopico.curso();
+        }
+        if (datosActulizarTopico.titulo() != null && !datosActulizarTopico.titulo().isBlank()) {
             this.titulo = datosActulizarTopico.titulo();
         }
-        if (datosActulizarTopico.mensaje() != null) {
+        if (datosActulizarTopico.mensaje() != null && !datosActulizarTopico.mensaje().isBlank()) {
             this.mensaje = datosActulizarTopico.mensaje();
         }
-
     }
+
 }
